@@ -26,12 +26,8 @@ class QuestionBox extends StatefulWidget {
 class _QuestionBoxState extends State<QuestionBox> {
   bool isChosen = false;
 
-  List<Color> backgroundColors = [
-    Colors.white,
-    Colors.white,
-    Colors.white,
-    Colors.white,
-  ];
+  List<Color> backgroundColors =
+      List<Color>.filled(4, Colors.white, growable: false);
 
   _QuestionBoxState();
 

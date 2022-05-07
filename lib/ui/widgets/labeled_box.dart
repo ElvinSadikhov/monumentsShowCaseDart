@@ -1,42 +1,48 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: unnecessary_this
 
-class LabelBox extends StatelessWidget {
-  final String text;
+import 'package:flutter/material.dart';
+import 'package:monuments_app/models/responses/monument_response.dart';
+
+class LabeledBox extends StatelessWidget {
+  final Monument monument;
   final double fontSize;
   final double borderRadius;
 
-  const LabelBox({
+  const LabeledBox({
     Key? key,
-    required this.text,
+    required this.monument,
     this.fontSize = 20,
     this.borderRadius = 20,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(this.borderRadius)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 20,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.indigo[400]!,
+                spreadRadius: 3,
+                blurRadius: 8,
+                blurStyle: BlurStyle.inner,
+              )
+            ],
           ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        child: Text(
-          this.text,
-          style: TextStyle(
-            fontSize: this.fontSize,
-            color: Colors.grey[900],
-          ),
-        ),
-      ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(this.borderRadius),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: Text(
+                this.monument.name,
+                style: TextStyle(
+                  fontSize: this.fontSize,
+                  color: Colors.grey[900],
+                ),
+              ),
+            ),
+          )),
     );
   }
 }
