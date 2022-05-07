@@ -21,10 +21,11 @@ class QuestionBox extends StatefulWidget {
 
   @override
   State<QuestionBox> createState() => _QuestionBoxState(
-      questionAnswers: this.questionAnswers,
-      correctAnswer: this.correctAnswer,
-      questionLabel: this.questionLabel,
-      questionNumber: this.questionNumber);
+        questionAnswers: this.questionAnswers,
+        correctAnswer: this.correctAnswer,
+        questionLabel: this.questionLabel,
+        questionNumber: this.questionNumber,
+      );
 }
 
 class _QuestionBoxState extends State<QuestionBox> {
@@ -33,20 +34,25 @@ class _QuestionBoxState extends State<QuestionBox> {
   final List<Answer> questionAnswers;
   final Answer correctAnswer;
 
-  late bool isVariantChosen;
-  late Color backgroundColor;
+  bool isChosen = false;
 
-  _QuestionBoxState(
-      {required this.questionNumber,
-      required this.questionLabel,
-      required this.questionAnswers,
-      required this.correctAnswer});
+  List<Color> backgroundColors = [
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+  ];
+
+  _QuestionBoxState({
+    required this.questionNumber,
+    required this.questionLabel,
+    required this.questionAnswers,
+    required this.correctAnswer,
+  });
 
   @override
   void initState() {
     super.initState();
-    this.isVariantChosen = false;
-    this.backgroundColor = Colors.white;
     this.questionAnswers.shuffle();
   }
 
@@ -56,87 +62,47 @@ class _QuestionBoxState extends State<QuestionBox> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-              "Question${this.questionNumber}:  ${this.questionLabel}",
-              style: const TextStyle(fontSize: 22),
-            ),
-          ),
-          WidgetMethods.verticalSpace(10),
-          GestureDetector(
-            onTap: () {
-              if (!this.isVariantChosen) {
-                setState(() {
-                  this.backgroundColor =
-                      this.isCorrectAnswer(this.questionAnswers[0].stringValue)
-                          ? Colors.green
-                          : Colors.red;
-                  this.isVariantChosen = true;
-                });
-              }
-            },
-            child: AnswerBox(
-                answer: this.questionAnswers[0].stringValue,
-                borderRadius: BorderRadius.circular(20),
-                answerNumber: 1,
-                backgroundColor: this.backgroundColor),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (!this.isVariantChosen) {
-                setState(() {
-                  this.backgroundColor =
-                      this.isCorrectAnswer(this.questionAnswers[1].stringValue)
-                          ? Colors.green
-                          : Colors.red;
-                  this.isVariantChosen = true;
-                });
-              }
-            },
-            child: AnswerBox(
-                answer: this.questionAnswers[1].stringValue,
-                borderRadius: BorderRadius.circular(20),
-                answerNumber: 2,
-                backgroundColor: this.backgroundColor),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (!this.isVariantChosen) {
-                setState(() {
-                  this.backgroundColor =
-                      this.isCorrectAnswer(this.questionAnswers[2].stringValue)
-                          ? Colors.green
-                          : Colors.red;
-                  this.isVariantChosen = true;
-                });
-              }
-            },
-            child: AnswerBox(
-                answer: this.questionAnswers[2].stringValue,
-                borderRadius: BorderRadius.circular(20),
-                answerNumber: 3,
-                backgroundColor: this.backgroundColor),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (!this.isVariantChosen) {
-                setState(() {
-                  this.backgroundColor =
-                      this.isCorrectAnswer(this.questionAnswers[3].stringValue)
-                          ? Colors.green
-                          : Colors.red;
-                  this.isVariantChosen = true;
-                });
-              }
-            },
-            child: AnswerBox(
-                answer: this.questionAnswers[3].stringValue,
-                borderRadius: BorderRadius.circular(20),
-                answerNumber: 4,
-                backgroundColor: this.backgroundColor),
-          ),
-        ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  children: [
+                    Text(
+                      "Question${this.questionNumber}:  ${this.questionLabel}",
+                      style: const TextStyle(fontSize: 22),
+                    ),
+                    WidgetMethods.verticalSpace(10)
+                  ],
+                ),
+              )
+            ] +
+            [0, 1, 2, 3]
+                .map((index) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (!this.isChosen) {
+                            if (this.isCorrectAnswer(
+                                this.questionAnswers[index].stringValue)) {
+                              this.backgroundColors[index] = Colors.green;
+                            } else {
+                              this.backgroundColors[index] = Colors.red;
+                            }
+                            setState(() {
+                              this.isChosen = true;
+                            });
+                          }
+                        },
+                        child: AnswerBox(
+                          answer: this.questionAnswers[index].stringValue,
+                          borderRadius: BorderRadius.circular(20),
+                          isCorrect: this.isCorrectAnswer(
+                              this.questionAnswers[index].stringValue),
+                          backgroundColor: this.backgroundColors[index],
+                        ),
+                      ),
+                    ))
+                .toList(),
       ),
     );
   }
@@ -148,100 +114,100 @@ class _QuestionBoxState extends State<QuestionBox> {
 
 /////////////////////////////////////////////
 
-class QuestionBox1 extends StatelessWidget {
-  final int questionNumber;
-  final String questionLabel;
-  final List<String> questionAnswers;
-  final String correctAnswer;
+// class QuestionBox1 extends StatelessWidget {
+//   final int questionNumber;
+//   final String questionLabel;
+//   final List<String> questionAnswers;
+//   final String correctAnswer;
 
-  bool isVariantChosen = false;
-  Color backhroundColor = Colors.white;
+//   bool isVariantChosen = false;
+//   Color backhroundColor = Colors.white;
 
-  QuestionBox1(
-      {Key? key,
-      required this.questionNumber,
-      required this.questionLabel,
-      required this.questionAnswers,
-      required this.correctAnswer})
-      : super(key: key);
+//   QuestionBox1(
+//       {Key? key,
+//       required this.questionNumber,
+//       required this.questionLabel,
+//       required this.questionAnswers,
+//       required this.correctAnswer})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Question${this.questionNumber}:  ${this.questionLabel}",
-          style: const TextStyle(fontSize: 22),
-        ),
-        GestureDetector(
-          onTap: () {
-            if (!this.isVariantChosen) {
-              this.backhroundColor =
-                  this.isCorrectAnswer(this.questionAnswers[0])
-                      ? Colors.green
-                      : Colors.red;
-              this.isVariantChosen = true;
-            }
-          },
-          child: AnswerBox(
-              answer: this.questionAnswers[0],
-              borderRadius: BorderRadius.circular(20),
-              answerNumber: 1,
-              backgroundColor: this.backhroundColor),
-        ),
-        GestureDetector(
-          onTap: () {
-            if (!this.isVariantChosen) {
-              this.backhroundColor =
-                  this.isCorrectAnswer(this.questionAnswers[1])
-                      ? Colors.green
-                      : Colors.red;
-              this.isVariantChosen = true;
-            }
-          },
-          child: AnswerBox(
-              answer: this.questionAnswers[1],
-              borderRadius: BorderRadius.circular(20),
-              answerNumber: 1,
-              backgroundColor: this.backhroundColor),
-        ),
-        GestureDetector(
-          onTap: () {
-            if (!this.isVariantChosen) {
-              this.backhroundColor =
-                  this.isCorrectAnswer(this.questionAnswers[2])
-                      ? Colors.green
-                      : Colors.red;
-              this.isVariantChosen = true;
-            }
-          },
-          child: AnswerBox(
-              answer: this.questionAnswers[2],
-              borderRadius: BorderRadius.circular(20),
-              answerNumber: 1,
-              backgroundColor: this.backhroundColor),
-        ),
-        GestureDetector(
-          onTap: () {
-            if (!this.isVariantChosen) {
-              this.backhroundColor =
-                  this.isCorrectAnswer(this.questionAnswers[3])
-                      ? Colors.green
-                      : Colors.red;
-              this.isVariantChosen = true;
-            }
-          },
-          child: AnswerBox(
-              answer: this.questionAnswers[3],
-              borderRadius: BorderRadius.circular(20),
-              answerNumber: 1,
-              backgroundColor: this.backhroundColor),
-        ),
-      ],
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         Text(
+//           "Question${this.questionNumber}:  ${this.questionLabel}",
+//           style: const TextStyle(fontSize: 22),
+//         ),
+//         GestureDetector(
+//           onTap: () {
+//             if (!this.isVariantChosen) {
+//               this.backhroundColor =
+//                   this.isCorrectAnswer(this.questionAnswers[0])
+//                       ? Colors.green
+//                       : Colors.red;
+//               this.isVariantChosen = true;
+//             }
+//           },
+//           child: AnswerBox1(
+//               answer: this.questionAnswers[0],
+//               borderRadius: BorderRadius.circular(20),
+//               answerNumber: 1,
+//               backgroundColor: this.backhroundColor),
+//         ),
+//         GestureDetector(
+//           onTap: () {
+//             if (!this.isVariantChosen) {
+//               this.backhroundColor =
+//                   this.isCorrectAnswer(this.questionAnswers[1])
+//                       ? Colors.green
+//                       : Colors.red;
+//               this.isVariantChosen = true;
+//             }
+//           },
+//           child: AnswerBox1(
+//               answer: this.questionAnswers[1],
+//               borderRadius: BorderRadius.circular(20),
+//               answerNumber: 1,
+//               backgroundColor: this.backhroundColor),
+//         ),
+//         GestureDetector(
+//           onTap: () {
+//             if (!this.isVariantChosen) {
+//               this.backhroundColor =
+//                   this.isCorrectAnswer(this.questionAnswers[2])
+//                       ? Colors.green
+//                       : Colors.red;
+//               this.isVariantChosen = true;
+//             }
+//           },
+//           child: AnswerBox1(
+//               answer: this.questionAnswers[2],
+//               borderRadius: BorderRadius.circular(20),
+//               answerNumber: 1,
+//               backgroundColor: this.backhroundColor),
+//         ),
+//         GestureDetector(
+//           onTap: () {
+//             if (!this.isVariantChosen) {
+//               this.backhroundColor =
+//                   this.isCorrectAnswer(this.questionAnswers[3])
+//                       ? Colors.green
+//                       : Colors.red;
+//               this.isVariantChosen = true;
+//             }
+//           },
+//           child: AnswerBox1(
+//               answer: this.questionAnswers[3],
+//               borderRadius: BorderRadius.circular(20),
+//               answerNumber: 1,
+//               backgroundColor: this.backhroundColor),
+//         ),
+//       ],
+//     );
+//   }
 
-  bool isCorrectAnswer(String answer) {
-    return answer == this.correctAnswer ? true : false;
-  }
-}
+//   bool isCorrectAnswer(String answer) {
+//     return answer == this.correctAnswer ? true : false;
+//   }
+// }
