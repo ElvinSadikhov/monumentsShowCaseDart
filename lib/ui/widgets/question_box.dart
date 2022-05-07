@@ -20,20 +20,10 @@ class QuestionBox extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<QuestionBox> createState() => _QuestionBoxState(
-        questionAnswers: this.questionAnswers,
-        correctAnswer: this.correctAnswer,
-        questionLabel: this.questionLabel,
-        questionNumber: this.questionNumber,
-      );
+  State<QuestionBox> createState() => _QuestionBoxState();
 }
 
 class _QuestionBoxState extends State<QuestionBox> {
-  final int questionNumber;
-  final String questionLabel;
-  final List<Answer> questionAnswers;
-  final Answer correctAnswer;
-
   bool isChosen = false;
 
   List<Color> backgroundColors = [
@@ -43,17 +33,12 @@ class _QuestionBoxState extends State<QuestionBox> {
     Colors.white,
   ];
 
-  _QuestionBoxState({
-    required this.questionNumber,
-    required this.questionLabel,
-    required this.questionAnswers,
-    required this.correctAnswer,
-  });
+  _QuestionBoxState();
 
   @override
   void initState() {
     super.initState();
-    this.questionAnswers.shuffle();
+    this.widget.questionAnswers.shuffle();
   }
 
   @override
@@ -67,7 +52,7 @@ class _QuestionBoxState extends State<QuestionBox> {
                 child: Column(
                   children: [
                     Text(
-                      "Question${this.questionNumber}:  ${this.questionLabel}",
+                      "Question${this.widget.questionNumber}:  ${this.widget.questionLabel}",
                       style: const TextStyle(fontSize: 22),
                     ),
                     WidgetMethods.verticalSpace(10)
@@ -82,8 +67,10 @@ class _QuestionBoxState extends State<QuestionBox> {
                       child: GestureDetector(
                         onTap: () {
                           if (!this.isChosen) {
-                            if (this.isCorrectAnswer(
-                                this.questionAnswers[index].stringValue)) {
+                            if (this.isCorrectAnswer(this
+                                .widget
+                                .questionAnswers[index]
+                                .stringValue)) {
                               this.backgroundColors[index] = Colors.green;
                             } else {
                               this.backgroundColors[index] = Colors.red;
@@ -94,10 +81,11 @@ class _QuestionBoxState extends State<QuestionBox> {
                           }
                         },
                         child: AnswerBox(
-                          answer: this.questionAnswers[index].stringValue,
+                          answer:
+                              this.widget.questionAnswers[index].stringValue,
                           borderRadius: BorderRadius.circular(20),
                           isCorrect: this.isCorrectAnswer(
-                              this.questionAnswers[index].stringValue),
+                              this.widget.questionAnswers[index].stringValue),
                           backgroundColor: this.backgroundColors[index],
                         ),
                       ),
@@ -108,6 +96,6 @@ class _QuestionBoxState extends State<QuestionBox> {
   }
 
   bool isCorrectAnswer(String answer) {
-    return answer == this.correctAnswer.stringValue ? true : false;
+    return answer == this.widget.correctAnswer.stringValue ? true : false;
   }
 }

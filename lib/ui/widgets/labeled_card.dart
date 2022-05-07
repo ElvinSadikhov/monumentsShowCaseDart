@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monuments_app/ui/screens/second_screen.dart';
+import 'package:monuments_app/ui/screens/quiz_screen.dart';
 import 'package:monuments_app/ui/widgets/labeled_box.dart';
 
 class LabeledCard extends StatelessWidget {
@@ -32,7 +32,7 @@ class LabeledCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    SecondScreen(uid: uid, monumentName: labelMain)));
+                    QuizScreen(uid: uid, monumentName: labelMain)));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

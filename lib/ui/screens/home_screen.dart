@@ -3,14 +3,14 @@ import 'package:monuments_app/models/responses/monument_response.dart';
 import 'package:monuments_app/services/explore_service.dart';
 import 'package:monuments_app/ui/widgets/labeled_card.dart';
 
-class FirstScreen extends StatefulWidget {
-  const FirstScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreen> createState() => _FirstScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   ExploreService exploreService = ExploreService();
 
   late Future<MonumentResponse> monumentResponse;

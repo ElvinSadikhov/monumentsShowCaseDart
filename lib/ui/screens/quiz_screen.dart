@@ -6,23 +6,23 @@ import 'package:monuments_app/services/quiz_service.dart';
 import 'package:monuments_app/ui/widgets/question_box.dart';
 import 'package:monuments_app/utils/helper/widget_method.dart';
 
-class SecondScreen extends StatefulWidget {
+class QuizScreen extends StatefulWidget {
   final int uid;
 
   final String monumentName;
 
-  const SecondScreen({Key? key, required this.uid, required this.monumentName})
+  const QuizScreen({Key? key, required this.uid, required this.monumentName})
       : super(key: key);
 
   @override
-  State<SecondScreen> createState() => _SecondScreenState();
+  State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _SecondScreenState extends State<SecondScreen> {
+class _QuizScreenState extends State<QuizScreen> {
   QuizService quizService = QuizService();
   late Future<QuizResponse> quizResponse;
 
-  _SecondScreenState();
+  _QuizScreenState();
 
   @override
   void initState() {

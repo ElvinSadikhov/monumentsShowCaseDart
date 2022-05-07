@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monuments_app/ui/screens/first_screen.dart';
+import 'package:monuments_app/ui/screens/home_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: FirstScreen(),
+      home: HomeScreen(),
     );
   }
 }
