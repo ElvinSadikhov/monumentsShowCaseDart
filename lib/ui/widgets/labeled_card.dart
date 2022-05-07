@@ -31,9 +31,8 @@ class LabeledCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SecondScreen(
-                      index: uid,
-                    )));
+                builder: (context) =>
+                    SecondScreen(index: uid, monumentName: labelMain)));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

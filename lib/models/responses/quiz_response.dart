@@ -86,22 +86,22 @@ class Question {
 class Answer {
   Answer({
     required this.uid,
-    required this.value,
+    required this.stringValue,
   });
 
   final int uid;
-  final String value;
+  final String stringValue;
 
   factory Answer.fromJson(Map<String, dynamic> json) => Answer(
         uid: json["uid"],
-        value: json["value"],
+        stringValue: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "uid": uid,
-        "value": value,
+        "value": stringValue,
       };
 
   @override
-  String toString() => value;
+  String toString() => stringValue;
 }
