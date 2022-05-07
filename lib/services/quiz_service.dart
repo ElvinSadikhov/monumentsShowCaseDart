@@ -24,7 +24,7 @@ class QuizService extends BaseService {
   }
 }
 
-void main() {
-  QuizService obj = QuizService();
-  obj.getQuestions(1);
-}
+// void main() {
+//   QuizService obj = QuizService();
+//   obj.getQuestions(1);
+// }
