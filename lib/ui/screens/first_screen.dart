@@ -13,38 +13,46 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   ExploreService exploreService = ExploreService();
 
-  MonumentResponse monumentResponse = MonumentResponse(monuments: []);
+  late Future<MonumentResponse> monumentResponse;
 
   @override
   void initState() {
     super.initState();
-
     fetchData();
   }
 
   void fetchData() async {
-    monumentResponse = await exploreService.getMonuments();
-    setState() {}
-
-    debugPrint(monumentResponse.toString());
+    monumentResponse = exploreService.getMonuments();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("CSDC"),
+          title: const Text("CSDC"),
         ),
         body: Center(
-          child: ListView.builder(
-            itemCount: monumentResponse.monuments.length,
-            itemBuilder: (BuildContext context, int index) {
-              return LabeledCard(
-                  labelMain: monumentResponse.monuments[index].name,
-                  labelSecondary: monumentResponse.monuments[index].location,
-                  imageUrl: monumentResponse.monuments[index].photoUrl,
-                  description: monumentResponse.monuments[index].description,
-                  uid: monumentResponse.monuments[index].uid);
+          child: FutureBuilder<MonumentResponse>(
+            future: monumentResponse,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.monuments.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return LabeledCard(
+                        labelMain: snapshot.data!.monuments[index].name,
+                        labelSecondary:
+                            snapshot.data!.monuments[index].location,
+                        imageUrl: snapshot.data!.monuments[index].photoUrl,
+                        description:
+                            snapshot.data!.monuments[index].description,
+                        uid: snapshot.data!.monuments[index].uid);
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Text("Some error occured! Error: ${snapshot.error}");
+              }
+              return const CircularProgressIndicator();
             },
           ),
         ));

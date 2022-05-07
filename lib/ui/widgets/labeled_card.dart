@@ -8,11 +8,11 @@ class LabeledCard extends StatelessWidget {
   final String imageUrl;
   final String description;
   final int uid;
-  double? height;
-  double? width;
+  final double? height;
+  final double? width;
   final double borderRadius;
 
-  LabeledCard(
+  const LabeledCard(
       {Key? key,
       required this.labelMain,
       this.labelSecondary,
@@ -32,7 +32,7 @@ class LabeledCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    SecondScreen(index: uid, monumentName: labelMain)));
+                    SecondScreen(uid: uid, monumentName: labelMain)));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
